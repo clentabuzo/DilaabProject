@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --ink: #141414;
+  --cream: #faf6ee;
+  --red: #d81e26;
+  --red-deep: #6e0b10;
+  --line: rgba(20, 20, 20, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, sans-serif;
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  font-family: 'Bebas Neue', 'Inter', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: var(--ink);
+  border-bottom: 1px solid rgba(250, 246, 238, 0.12);
+  z-index: 10;
+}
+
+.nav-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cream);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+}
+
+.brand-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.nav-links {
+  display: flex;
+  gap: 26px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav-links a {
+  color: var(--cream);
+  opacity: 0.75;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+/* HERO */
+.hero {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 88px 24px 96px;
+}
+
+.hero-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--red);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: clamp(44px, 8vw, 76px);
+}
+
+.tagline {
+  font-style: italic;
+  color: var(--red);
+  font-size: 19px;
+  margin: 22px 0 14px;
+}
+
+.lede {
+  font-size: 17px;
+  opacity: 0.85;
+  max-width: 46ch;
+  margin: 0 auto;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 34px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--cream);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 26px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: var(--red-deep);
+}
+
+.btn-ghost {
+  border: 1px solid rgba(250, 246, 238, 0.4);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 26px;
+  border-radius: 4px;
+}
+
+.btn-ghost:hover {
+  border-color: var(--cream);
+}
+
+/* SHARED SECTION */
+main section {
+  padding: 64px 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-head {
+  max-width: 1080px;
+  margin: 0 auto 32px;
+}
+
+.section-head h2,
+.about h2,
+.join h2 {
+  font-size: clamp(30px, 4.5vw, 40px);
+}
+
+.section-head p {
+  max-width: 42ch;
+  font-size: 15px;
+  opacity: 0.75;
+  margin: 8px 0 0;
+}
+
+/* SHOWCASE */
+.showcase {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* Stack categories vertically (Apparel top, Paddles bottom) */
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.category-group {
+  width: 100%;
+}
+
+.category-heading {
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: var(--red-deep);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Display cards side-by-side inside each category */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.card {
+  flex: 0 0 320px; /* Ensures items stay fixed width instead of shrinking */
+  scroll-snap-align: start;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+/* HORIZONTAL SCROLL CONTAINER */
+.gallery {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 12px;
+  
+  /* Hide scrollbar on Firefox & Webkit browsers */
+  scrollbar-width: thin;
+}
+.card-image {
+  height: 220px;
+  width: calc(100% + 40px);
+  margin: -20px -20px 10px -20px;
+  overflow: hidden;
+  background-color: #f6f6f6;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.card-image.is-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(20, 20, 20, 0.04),
+    rgba(20, 20, 20, 0.04) 10px,
+    rgba(20, 20, 20, 0.07) 10px,
+    rgba(20, 20, 20, 0.07) 20px
+  );
+  border-bottom: 1px dashed var(--line);
+}
+
+.card-image.is-placeholder span {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.5;
+}
+
+/* Responsive view for mobile screens */
+@media (max-width: 640px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+.tag {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 9px;
+  border-radius: 3px;
+  background: var(--red-deep);
+  color: var(--cream);
+}
+
+.card h3 {
+  font-size: 22px;
+}
+
+.card p {
+  font-size: 14px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* ABOUT */
+.about-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about-grid p {
+  font-size: 16px;
+  opacity: 0.85;
+  margin-top: 14px;
+}
+
+.roster {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.roster li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.roster li span:last-child {
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* JOIN */
+.join {
+  border-bottom: none;
+}
+
+.join-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 6px;
+  padding: 48px;
+  text-align: center;
+}
+
+.join-card p {
+  opacity: 0.85;
+  margin: 12px 0 24px;
+}
+
+/* FOOTER */
+.site-footer {
+  padding: 28px 24px;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 760px) {
+  .categories {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 14px;
+    font-size: 13px;
+  }
+}

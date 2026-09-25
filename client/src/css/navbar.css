@@ -1,0 +1,228 @@
+
+/* ========================================
+   DILAAB COLOR PALETTE
+======================================== */
+
+:root {
+  --dilaab-black: #111111;
+  --dilaab-orange: #f97316;
+  --dilaab-red: #dc2626;
+  --dilaab-white: #ffffff;
+  --dilaab-gray: #1f1f1f;
+}
+
+
+/* ========================================
+   NAVBAR
+======================================== */
+
+.dilaab-navbar {
+  background-color: var(--dilaab-black);
+
+  padding: 14px 0;
+
+  border-bottom: 3px solid var(--dilaab-orange);
+
+  position: relative;
+  z-index: 1000;
+}
+
+
+/* ========================================
+   BRAND
+======================================== */
+
+.dilaab-brand {
+  text-decoration: none;
+
+  color: var(--dilaab-white);
+
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+.dilaab-logo {
+  width: 45px;
+  height: 45px;
+
+  object-fit: contain;
+}
+
+.dilaab-name {
+  color: var(--dilaab-white);
+
+  font-size: 1.4rem;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+/* ========================================
+   HAMBURGER
+======================================== */
+
+.dilaab-navbar .navbar-toggler {
+  border: 1px solid var(--dilaab-orange);
+
+  padding: 7px 10px;
+
+  box-shadow: none;
+}
+
+.dilaab-navbar .navbar-toggler:hover {
+  border-color: var(--dilaab-red);
+}
+
+.dilaab-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.3);
+}
+
+
+/* Make hamburger icon white */
+
+.dilaab-navbar .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
+.dilaab-nav {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-left: auto;
+}
+
+.dilaab-nav-link {
+  position: relative;
+
+  padding: 10px 14px;
+
+  color: #dddddd;
+
+  text-decoration: none;
+
+  font-weight: 500;
+
+  transition: all 0.25s ease;
+}
+
+
+/* Orange underline */
+
+.dilaab-nav-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 14px;
+  right: 14px;
+  bottom: 2px;
+
+  height: 2px;
+
+  background-color: var(--dilaab-orange);
+
+  transform: scaleX(0);
+
+  transition: transform 0.25s ease;
+}
+
+
+.dilaab-nav-link:hover {
+  color: var(--dilaab-white);
+}
+
+
+.dilaab-nav-link:hover::after,
+.dilaab-nav-link.active::after {
+  transform: scaleX(1);
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 991.98px) {
+
+  #dilaabNavigation {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    background-color: var(--dilaab-gray);
+
+    border-radius: 8px;
+  }
+
+
+  .dilaab-nav {
+    width: 100%;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 4px;
+
+    margin-left: 0;
+  }
+
+
+  .dilaab-nav-link {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border-radius: 6px;
+  }
+
+
+  .dilaab-nav-link:hover {
+    background-color: #292929;
+  }
+
+
+  .dilaab-nav-link::after {
+    display: none;
+  }
+}
+
+
+/* ========================================
+   SMALL PHONES
+======================================== */
+
+@media (max-width: 575.98px) {
+
+  .dilaab-navbar {
+    padding: 10px 0;
+  }
+
+
+  .dilaab-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+
+  .dilaab-name {
+    font-size: 1.2rem;
+  }
+
+
+  .dilaab-navbar .navbar-toggler {
+    padding: 6px 9px;
+  }
+}
