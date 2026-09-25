@@ -20,6 +20,29 @@ const products = [
       'Heavyweight cotton tee with the club crest on the chest.',
     image: merch,
   },
+    {
+    id: 'ember-tee',
+    tag: 'APPAREL',
+    name: 'Ember Club Tee',
+    description:
+      'Heavyweight cotton tee with the club crest on the chest.',
+    image: merch,
+  },
+    {
+    id: 'ember-tee',
+    tag: 'APPAREL',
+    name: 'Ember Club Tee',
+    description:
+      'Heavyweight cotton tee with the club crest on the chest.',
+    image: merch,
+  },  {
+    id: 'ember-tee',
+    tag: 'APPAREL',
+    name: 'Ember Club Tee',
+    description:
+      'Heavyweight cotton tee with the club crest on the chest.',
+    image: merch,
+  },
   {
     id: 'ember-paddle-wrap',
     tag: 'PADDLES',
