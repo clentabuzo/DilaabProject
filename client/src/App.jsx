@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import Navbar from './component/navbar.jsx'
-import Showcase from './component/Showcase.jsx'
+import Showcase from './component/showcase.jsx'
 import OpenPlayQueue from './component/OpenPlayQueue.jsx'
 
 const VIEW_STORAGE_KEY = 'dilaab-active-view'
