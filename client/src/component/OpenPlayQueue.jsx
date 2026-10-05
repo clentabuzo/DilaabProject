@@ -10,7 +10,6 @@ function createInitialSession(id, name = 'Open Play 1') {
     players: [],
     courts: [
       { id: 1, label: 'Court 1', match: null },
-      { id: 2, label: 'Court 2', match: null },
     ],
     matchHistory: {},
     partnerHistory: {},
@@ -209,9 +208,10 @@ function OpenPlayQueue() {
   const benched = players.filter((p) => p.status === 'benched')
 
   useEffect(() => {
-    let remaining = [...waiting]
-
     setCustomDrafts((prevDrafts) => {
+      // must live INSIDE the updater: React StrictMode runs updaters twice,
+      // and a mutated outer variable made the 2nd run delete the draft
+      let remaining = [...waiting]
       const nextDrafts = { ...prevDrafts }
 
       courts.forEach((court) => {
@@ -349,7 +349,6 @@ function OpenPlayQueue() {
       players: [],
       courts: [
         { id: 1, label: 'Court 1', match: null },
-        { id: 2, label: 'Court 2', match: null },
       ],
       matchHistory: {},
       partnerHistory: {},
@@ -505,6 +504,10 @@ function OpenPlayQueue() {
       draft ? [...draft.teamA, ...draft.teamB] : []
     )
   )
+
+  // players already placed in another court's draft
+  const freePlayers = waiting.length - upNextIds.size
+  const playersNeeded = Math.max(0, 4 - freePlayers)
 
   const leaderboard = [...players].sort((a, b) => {
     if (b.wins !== a.wins) return b.wins - a.wins
@@ -874,7 +877,10 @@ function OpenPlayQueue() {
                   </div>
                 ) : (
                   <div className="court-empty">
-                    <p>Need {4 - waiting.length} more player(s) in queue</p>
+                    <p>
+                      Need {playersNeeded} more player
+                      {playersNeeded !== 1 ? 's' : ''} in queue
+                    </p>
                   </div>
                 )}
               </div>
