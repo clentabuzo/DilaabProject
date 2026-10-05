@@ -110,10 +110,9 @@ function splitIntoTeams(group, partnerHistory) {
 function OpenPlayQueue() {
   const [saved] = useState(() => loadSavedState())
 
-  // Sessions state: array of session objects
   const [sessions, setSessions] = useState(() => {
     if (saved?.sessions && saved.sessions.length > 0) return saved.sessions
-    return [createInitialSession('session-1', 'Morning Session')]
+    return [createInitialSession('session-1', 'OPEN PLAY')]
   })
 
   const [activeSessionId, setActiveSessionId] = useState(
@@ -122,7 +121,6 @@ function OpenPlayQueue() {
 
   const sessionCounterRef = useRef(saved?.sessionCounter ?? 2)
 
-  // Input states
   const [newSessionName, setNewSessionName] = useState('')
   const [editingSessionName, setEditingSessionName] = useState(false)
   const [sessionLabelInput, setSessionLabelInput] = useState('')
@@ -132,11 +130,9 @@ function OpenPlayQueue() {
   const [editValue, setEditValue] = useState('')
   const [customDrafts, setCustomDrafts] = useState({})
 
-  // Active session accessor
   const activeSession =
     sessions.find((s) => s.id === activeSessionId) || sessions[0]
 
-  // Persist all sessions to LocalStorage
   useEffect(() => {
     try {
       localStorage.setItem(
@@ -152,7 +148,6 @@ function OpenPlayQueue() {
     }
   }, [sessions, activeSessionId])
 
-  // Helper to update active session slice of state
   function updateActiveSession(updater) {
     setSessions((prevSessions) =>
       prevSessions.map((session) =>
@@ -167,10 +162,9 @@ function OpenPlayQueue() {
     return newId
   }
 
-  // Session Management Handlers
   function createSession(e) {
     e.preventDefault()
-    const name = newSessionName.trim() || `Open Play ${sessionCounterRef.current}`
+    const name = newSessionName.trim() || `NOVICE ${sessionCounterRef.current}`
     const newId = `session-${Date.now()}`
     const newSession = createInitialSession(newId, name)
 
@@ -203,7 +197,6 @@ function OpenPlayQueue() {
     setEditingSessionName(false)
   }
 
-  // Derived state for current session
   const players = activeSession.players
   const courts = activeSession.courts
   const matchHistory = activeSession.matchHistory
@@ -215,7 +208,6 @@ function OpenPlayQueue() {
     .sort((a, b) => a.queuedAt - b.queuedAt)
   const benched = players.filter((p) => p.status === 'benched')
 
-  // Auto-populated drafts effect
   useEffect(() => {
     let remaining = [...waiting]
 
@@ -257,7 +249,6 @@ function OpenPlayQueue() {
     })
   }, [courts, players, matchHistory, partnerHistory, activeSessionId])
 
-  // Queue actions
   function addPlayer(e) {
     e.preventDefault()
     const name = nameInput.trim()
@@ -522,63 +513,100 @@ function OpenPlayQueue() {
     return bRate - aRate
   })
 
+  const liveCourts = courts.filter((c) => c.match).length
+
   return (
     <main className="queue-page">
-      {/* MULTI-SESSION CONTROLLER HEADER */}
-      <section className="session-selector-bar">
-        <div className="session-tabs">
-          <label htmlFor="session-select"><strong>Open Play Session:</strong></label>
-          <select
-            id="session-select"
-            value={activeSessionId}
-            onChange={(e) => {
-              setActiveSessionId(e.target.value)
-              setCustomDrafts({})
-            }}
-          >
-            {sessions.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.name} ({s.players.length} players)
-              </option>
-            ))}
-          </select>
-
-          {editingSessionName ? (
-            <span className="session-rename-form">
-              <input
-                type="text"
-                value={sessionLabelInput}
-                onChange={(e) => setSessionLabelInput(e.target.value)}
-                autoFocus
-              />
-              <button onClick={saveSessionLabel}>Save</button>
-              <button onClick={() => setEditingSessionName(false)}>Cancel</button>
+      {/* SESSION BAR */}
+      <section className="session-bar">
+        <div className="session-bar-main">
+          <div className="session-field">
+            <label htmlFor="session-select" className="session-label">
+              Open Play Session
+            </label>
+            <div className="session-select-wrap">
+              <select
+                id="session-select"
+                value={activeSessionId}
+                onChange={(e) => {
+                  setActiveSessionId(e.target.value)
+                  setCustomDrafts({})
+                }}
+              >
+                {sessions.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <span className="session-meta">
+              {players.length} player{players.length !== 1 ? 's' : ''} ·{' '}
+              {liveCourts} of {courts.length} courts live
             </span>
-          ) : (
-            <button
-              className="btn-ghost small"
-              onClick={() => {
-                setSessionLabelInput(activeSession.name)
-                setEditingSessionName(true)
-              }}
-            >
-              Rename Label
-            </button>
-          )}
+          </div>
 
-          <button className="danger small" onClick={deleteActiveSession}>
-            Delete Session
-          </button>
+          <div className="session-actions">
+            {editingSessionName ? (
+              <form
+                className="session-rename"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  saveSessionLabel()
+                }}
+              >
+                <input
+                  type="text"
+                  value={sessionLabelInput}
+                  onChange={(e) => setSessionLabelInput(e.target.value)}
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  className="session-btn session-btn--primary"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="session-btn"
+                  onClick={() => setEditingSessionName(false)}
+                >
+                  Cancel
+                </button>
+              </form>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="session-btn"
+                  onClick={() => {
+                    setSessionLabelInput(activeSession.name)
+                    setEditingSessionName(true)
+                  }}
+                >
+                  Rename
+                </button>
+                <button
+                  type="button"
+                  className="session-btn session-btn--danger"
+                  onClick={deleteActiveSession}
+                >
+                  Delete
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
-        <form className="create-session-form" onSubmit={createSession}>
+        <form className="session-create" onSubmit={createSession}>
           <input
             type="text"
-            placeholder="New Session Label (e.g. Intermediate / Sunday)"
+            placeholder="New session name (e.g. Intermediate / Sunday)"
             value={newSessionName}
             onChange={(e) => setNewSessionName(e.target.value)}
           />
-          <button type="submit" className="btn-secondary small">
+          <button type="submit" className="session-btn session-btn--primary">
             + New Open Play
           </button>
         </form>
@@ -595,7 +623,6 @@ function OpenPlayQueue() {
       </section>
 
       <section className="queue-grid">
-        {/* ADD PLAYER + QUEUE */}
         <div className="queue-col">
           <h2 className="queue-heading">Queue</h2>
           <form className="add-player-form" onSubmit={addPlayer}>
@@ -705,7 +732,6 @@ function OpenPlayQueue() {
           )}
         </div>
 
-        {/* COURTS */}
         <div className="queue-col">
           <div className="courts-heading-row">
             <h2 className="queue-heading">Courts</h2>
@@ -857,7 +883,6 @@ function OpenPlayQueue() {
         </div>
       </section>
 
-      {/* RECENT MATCHES */}
       {matchLog.length > 0 && (
         <section className="recent-section">
           <h2 className="queue-heading">Recent matches</h2>
@@ -884,7 +909,6 @@ function OpenPlayQueue() {
         </section>
       )}
 
-      {/* SEASON RANKINGS */}
       <section className="leaderboard-section" id="leaderboard">
         <div className="season-header">
           <div>
@@ -928,35 +952,37 @@ function OpenPlayQueue() {
             <div className="leaderboard-full">
               <h3 className="sub-heading">Season Standings</h3>
 
-              <table className="leaderboard-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Player</th>
-                    <th>Played</th>
-                    <th>W</th>
-                    <th>L</th>
-                    <th>Win %</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {leaderboard.map((p, i) => (
-                    <tr key={p.id}>
-                      <td>{i + 1}</td>
-                      <td>{p.name}</td>
-                      <td>{p.gamesPlayed}</td>
-                      <td>{p.wins}</td>
-                      <td>{p.losses}</td>
-                      <td>
-                        {p.gamesPlayed
-                          ? `${Math.round((p.wins / p.gamesPlayed) * 100)}%`
-                          : '—'}
-                      </td>
+              <div className="table-scroll">
+                <table className="leaderboard-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Player</th>
+                      <th>Played</th>
+                      <th>W</th>
+                      <th>L</th>
+                      <th>Win %</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+
+                  <tbody>
+                    {leaderboard.map((p, i) => (
+                      <tr key={p.id}>
+                        <td>{i + 1}</td>
+                        <td>{p.name}</td>
+                        <td>{p.gamesPlayed}</td>
+                        <td>{p.wins}</td>
+                        <td>{p.losses}</td>
+                        <td>
+                          {p.gamesPlayed
+                            ? `${Math.round((p.wins / p.gamesPlayed) * 100)}%`
+                            : '—'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div className="end-season">
