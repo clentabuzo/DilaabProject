@@ -1519,7 +1519,7 @@
   .tournament-page .tournament-selector-bar {
     padding: 14px;
   }
-}
+
   .stage-steps li {
     font-size: 11px;
   }
@@ -1591,6 +1591,7 @@
   .pool-config-row {
     flex-wrap: wrap;
   }
+}
 /* =========================================
    APPEND THIS TO THE END OF YOUR Tournament.css
    (pool count hint, "Even split" button, standby note, rules text)
